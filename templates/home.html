@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Website Title</title>
+    <!-- Link to your external CSS file -->
+    <link rel="stylesheet" href="static/css/styles.css">
+</head>
+
+<body>
+    <header>
+        <img src="static/assets/countai_prev_ui.png" alt="Your Logo" id="logo">
+        <div id="status">
+            <div class="status-item">
+                <span id="online-value">{{ online_count }}</span>
+                <span id="online-label">Online</span>
+            </div>
+            <div class="status-item">
+                <span id="offline-value">{{ offline_count }}</span>
+                <span id="offline-label">Offline</span>
+            </div>
+        </div>
+
+    </header>
+
+    <!-- Add container with grid layout -->
+    <div class="grid-container">
+        <!-- First row -->
+        {% for mill_data in firebase_data %}
+        {% for key, data in mill_data.items() %}
+
+        <div class="grid-item item1">
+            <div class="mill-header">
+                <h2 class="kpr-title">{{ key }}</h2>
+                <!-- Add the round status icon -->
+                <div class="status-icon {% if data['status'] == 'online' %}active{% else %}inactive{% endif %}"></div>
+            </div>
+
+            <div class="details">
+                <div class="detail-item-main">
+                    <span><strong>Machine Status</strong></span>
+                    <span>{{ data['machine_status'] }}</span>
+                </div>
+                <div class="detail-item-main">
+                    <span><strong>Bypass Status</strong></span>
+                    <span>{{ data['bypass'] }}</span>
+                </div>
+                <div class="detail-item-main">
+                    <span><strong>Count</strong></span>
+                    <span>{{ data['count'] }}</span>
+                </div>
+                <div class="detail-item-main">
+                    <span><strong>Denier</strong></span>
+                    <span>{{ data['denier'] }}</span>
+                </div>
+                <div class="detail-item-main">
+                    <span><strong>LL</strong></span>
+                    <span>{{ data['loop_length'] }}</span>
+                </div>
+                <div class="detail-item-main">
+                    <span><strong>Fabric material</strong></span>
+                    <span>{{ data['fabric_type'] }}</span>
+                </div>
+                <div class="detail-item-main">
+                    <span><strong>Fabric color</strong></span>
+                    <span>{{ data['fabric_color'] }}</span>
+                </div>
+            </div>
+            <div class="additional-details-container item1">
+                <div class="defect-count-heading">
+                    <h3>Defect Count</h3>
+                </div>
+                <!-- add defect count heading top left here  -->
+                <div class="detail-row">
+                    <div class="detail-item">
+                        <span>Lycra</span>
+                        <span>{{ data['lycra'] }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>Shutoff</span>
+                        <span>{{ data['shutoff'] }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>Hole</span>
+                        <span>{{ data['hole'] }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span>Needle</span>
+                        <span>{{ data['needle'] }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        {% endfor %}
+    </div>
+</body>
+
+</html>

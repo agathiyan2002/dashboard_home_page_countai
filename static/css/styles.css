@@ -1,0 +1,336 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Ubuntu', Arial, sans-serif;
+    /* Use the Ubuntu font and fallback to Arial and sans-serif */
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 15px;
+    color: #333;
+}
+
+#logo {
+    max-width: 250px;
+    height: auto;
+}
+
+#status {
+    display: flex;
+}
+
+.status-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.grid-item.item1 {
+    background-color: #50192f;
+    /* Light Gray */
+}
+
+.grid-item.item2 {
+    background-color: #ff94be;
+    /* Gray */
+}
+
+.grid-item.item3 {
+    background-color: #fe6da8;
+    /* Silver */
+}
+
+.grid-item.item4 {
+    background-color: #BFBFBF;
+    /* Dark Gray */
+}
+
+.grid-item.item5 {
+    background-color: #B3B3B3;
+    /* Charcoal */
+}
+
+.grid-item.item6 {
+    background-color: #000000;
+    /* Darker Charcoal */
+}
+
+.grid-container {
+    background-color: #fffdfd;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, auto);
+    grid-gap: 40px;
+    max-width: 1500px;
+    margin: 80px auto 0;
+    padding: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.grid-item.item1 {
+    background-color: #ee8989;
+    /* Medium Red */
+}
+
+.grid-item.item2 {
+    background-color: #ee8989;
+    /* Medium Red */
+}
+
+.grid-item.item3 {
+    background-color: #ee8989;
+    /* Medium Red */
+}
+
+.grid-item.item4 {
+    background-color: #ee8989;
+    /* Medium Red */
+}
+
+.grid-item.item5 {
+    background-color: #ee8989;
+    /* Medium Red */
+}
+
+.grid-item.item6 {
+    background-color: #ee8989;
+    /* Medium Red */
+}
+
+
+/* ... (other CSS code remains unchanged) ... */
+
+
+.grid-item {
+    font-size: 24px;
+    font-weight: bold;
+    padding: 15px;
+    border-radius: 15px;
+    background-color: #FFD700;
+    /* Default background color for grid items */
+    height: auto;
+}
+
+.details {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.detail-item span {
+    margin: 5px 0;
+}
+
+.additional-details-container {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: #ffffff;
+    margin-top: 15px;
+    position: relative;
+}
+
+.defect-count-heading {
+
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    padding: 5px;
+    text-align: center;
+}
+
+.defect-count-heading h3 {
+    margin: 0;
+    font-size: 16px;
+    /* Adjust the font size as needed */
+}
+
+.detail-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.detail-item {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.detail-item span {
+    margin: 5px 0;
+    text-align: center;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.detail-item span:first-child {
+    order: 2;
+}
+
+.detail-item span:last-child {
+    order: 1;
+}
+
+
+/* ... (other CSS code remains unchanged) ... */
+
+
+.detail-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-grow: 1;
+    /* Each detail item takes equal space */
+}
+
+.detail-item span {
+    margin: 5px 0;
+    text-align: center;
+    font-weight: bold;
+    /* Add boldness to both label and value */
+    font-style: italic;
+    /* Add italic style to both label and value */
+}
+
+.detail-item span:first-child {
+    order: 2;
+    /* Move the label to the bottom */
+}
+
+.detail-item span:last-child {
+    order: 1;
+    /* Move the value to the top */
+}
+
+@font-face {
+    font-family: 'Ubuntu';
+    src: url('fontsUbuntu-Medium.ttf') format('truetype');
+    /* Add additional formats if needed, e.g., woff, woff2 */
+}
+
+.detail-item-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 10px 0;
+    /* Add margin for even spacing */
+}
+
+.detail-item-main span {
+    text-align: left;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: normal;
+    /* Adjust boldness */
+    font-size: 16px;
+    /* Adjust font size */
+    flex-grow: 1;
+}
+
+.detail-item-main span:last-child {
+    text-align: right;
+    font-family: 'Ubuntu', sans-serif;
+    font-weight: normal;
+    font-size: 16px;
+    /* Adjust font size */
+}
+
+.status-indicator {
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+    margin-left: 10px;
+    /* Adjust margin as needed */
+}
+
+/* ... (other CSS code remains unchanged) ... */
+/* Style for the round status icon */
+.mill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.status-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    /* Adjust margin or padding as needed */
+}
+
+
+/* Style for inactive status */
+.status-icon.inactive {
+    background-color: red;
+}
+
+/* Style for active status */
+.status-icon.active {
+    background-color: green;
+}
+
+/* ... (other CSS code remains unchanged) ... */
+.kpr-title {
+    font-size: 50px;
+    font-weight: bold;
+    margin-right: 10px;
+    /* Adjust margin as needed */
+}
+
+@font-face {
+    font-family: 'Ubuntu-Bold';
+    src: url('fonts/Ubuntu/Ubuntu-Bold.ttf') format('truetype');
+    /* Add additional formats if needed, e.g., woff, woff2 */
+}
+
+.kpr-title {
+    font-family: 'Ubuntu-Bold', sans-serif;
+    font-size: 50px;
+    font-weight: bold;
+    margin-right: 10px;
+    margin-top: 20px;
+    /* Adjust margin as needed */
+}
+
+#online-label,
+#offline-label,
+#online-value,
+#offline-value {
+    margin-bottom: 10px;
+    color: #FF0000;
+    /* Red color code */
+}
+
+#online-value,
+#offline-value {
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #FF0000;
+    /* Red color code */
+}
+
+#online-label,
+#offline-label {
+    font-size: 18px;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #FF0000;
+    /* Red color code */
+}
