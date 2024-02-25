@@ -5,15 +5,16 @@ import time
 from datetime import datetime
 
 # Replace these values with your PostgreSQL connection details
-DB_HOST = 'localhost'
-DB_PORT = '5432'
-DB_NAME = 'kpr'
-DB_USER = 'postgres'
-DB_PASSWORD = 'soft'
-mill_name = "kpr12"
+DB_HOST = "localhost"
+DB_PORT = "5432"
+DB_NAME = "kpr"
+DB_USER = "postgres"
+DB_PASSWORD = "soft"
+mill_name = "kpr55"
 
 # Replace this with your Firebase Realtime Database URL
-FIREBASE_URL = 'https://dashboard-api-62cdd-default-rtdb.firebaseio.com/'
+FIREBASE_URL = "https://dashboard-api-62cdd-default-rtdb.firebaseio.com/"
+
 
 def fetch_data():
     try:
@@ -22,7 +23,7 @@ def fetch_data():
             port=DB_PORT,
             database=DB_NAME,
             user=DB_USER,
-            password=DB_PASSWORD
+            password=DB_PASSWORD,
         )
 
         cursor = conn.cursor()
@@ -47,7 +48,9 @@ def fetch_data():
         program_data = cursor.fetchone()
 
         # Fetch alarm_id and defect_id from combined_alarm_defect_details
-        alarm_defect_query = "SELECT alarm_id, defect_id FROM combined_alarm_defect_details;"
+        alarm_defect_query = (
+            "SELECT alarm_id, defect_id FROM combined_alarm_defect_details;"
+        )
         cursor.execute(alarm_defect_query)
         alarm_defect_data = cursor.fetchall()
 
@@ -71,10 +74,11 @@ def fetch_data():
         if conn:
             conn.close()
 
+
 def upload_to_firebase(data):
     try:
         # Delete the existing data with mill_name key
-        #requests.delete(FIREBASE_URL + mill_name + ".json")
+        # requests.delete(FIREBASE_URL + mill_name + ".json")
 
         # Upload the new data
         response = requests.patch(FIREBASE_URL + mill_name + ".json", json=data)
@@ -89,40 +93,56 @@ def upload_to_firebase(data):
     except requests.exceptions.RequestException as err:
         print(f"Request Error: {err}")
 
+
 def job():
     print("Fetching data and uploading to Firebase...")
     machine_data, button_data, program_data, defect_type_data = fetch_data()
 
-    if machine_data is not None and button_data is not None and program_data is not None and defect_type_data is not None:
+    if (
+        machine_data is not None
+        and button_data is not None
+        and program_data is not None
+        and defect_type_data is not None
+    ):
         defect_counts = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0, 7: 0, 8: 0}
 
         for _, defect_type_id in defect_type_data:
             defect_counts[defect_type_id] += 1
 
         upload_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        print("+++++++++++++++++++++")
+        print(defect_counts)
+        print("+++++++++++++++++++++++++")
 
         status_dict = {
             mill_name: {
                 "bypass": "on" if button_data[1] == 1 else "off",
-                "machine_status": "running" if machine_data[0][0] == 1 else "not running",
+                "machine_status": (
+                    "running" if machine_data[0][0] == 1 else "not running"
+                ),
                 "fabric_type": program_data[0],
                 "fabric_color": program_data[1],
                 "count": program_data[2],
                 "denier": program_data[3],
                 "loop_length": program_data[4],
-                "lycra": defect_counts.get(1, 0),
-                "hole": defect_counts.get(2, 0),
-                "shutoff": defect_counts.get(3, 0),
-                "needle": defect_counts.get(4, 0),
-                "sending_time": upload_time
+                "Lycra": defect_counts.get(1, 0),
+                "Hole": defect_counts.get(2, 0),
+                "Shutoff": defect_counts.get(3, 0),
+                "Needle": defect_counts.get(4, 0),
+                "Oil": defect_counts.get(5, 0),
+                "Twoply": defect_counts.get(6, 0),
+                "Stopline": defect_counts.get(7, 0),
+                "Countmix": defect_counts.get(8, 0),
+                "sending_time": upload_time,
             }
         }
         modified_status_dict = status_dict[mill_name]
         upload_to_firebase(modified_status_dict)
 
+
 # Schedule the job to run every 1 minute for testing purposes
-#schedule.every(30).minutes.do(job)
-schedule.every(60).seconds.do(job)
+# schedule.every(30).minutes.do(job)
+schedule.every(4).seconds.do(job)
 # Keep the script running
 while True:
     schedule.run_pending()
