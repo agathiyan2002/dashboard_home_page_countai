@@ -66,12 +66,12 @@ header {
 }
 
 .grid-container {
-    background-color: #fffdfd;
+    background-color: #ffffff;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, auto);
     grid-gap: 40px;
-    max-width: 1500px;
+    max-width: 1800px;
     margin: 80px auto 0;
     padding: 40px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -161,8 +161,9 @@ header {
 }
 
 .detail-row {
-    display: flex;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
 }
 
 .detail-item {
@@ -170,14 +171,18 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
 }
 
 .detail-item span {
     margin: 5px 0;
     text-align: center;
     font-weight: bold;
-    font-style: italic;
 }
+
+
 
 .detail-item span:first-child {
     order: 2;

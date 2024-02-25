@@ -31,6 +31,7 @@
         {% for mill_data in firebase_data %}
         {% for key, data in mill_data.items() %}
 
+
         <div class="grid-item item1">
             <div class="mill-header">
                 <h2 class="kpr-title">{{ key }}</h2>
@@ -72,26 +73,27 @@
                 <div class="defect-count-heading">
                     <h3>Defect Count</h3>
                 </div>
-                <!-- add defect count heading top left here  -->
+
+                <!-- Iterate over defect details dynamically -->
                 <div class="detail-row">
+                    {% set defect_details = [] %}
+                    {% for defect, count in data.items() if defect not in ['bypass', 'count', 'denier', 'fabric_color',
+                    'fabric_type', 'loop_length', 'machine_status', 'sending_time', 'status'] and count != 0 %}
+                    {% set defect_details = defect_details + [(defect, count)] %}
+                    {% for defect, count in defect_details %}
                     <div class="detail-item">
-                        <span>Lycra</span>
-                        <span>{{ data['lycra'] }}</span>
+                        <span>{{ defect }}</span>
+                        <span>{{ count }}</span>
                     </div>
-                    <div class="detail-item">
-                        <span>Shutoff</span>
-                        <span>{{ data['shutoff'] }}</span>
-                    </div>
-                    <div class="detail-item">
-                        <span>Hole</span>
-                        <span>{{ data['hole'] }}</span>
-                    </div>
-                    <div class="detail-item">
-                        <span>Needle</span>
-                        <span>{{ data['needle'] }}</span>
-                    </div>
+
+                    {% endfor %}
+                    {% endfor %}
+
+
                 </div>
+
             </div>
+
         </div>
         {% endfor %}
         {% endfor %}
