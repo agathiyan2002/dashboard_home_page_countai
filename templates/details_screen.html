@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Details Screen</title>
+    <!-- Link to Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Link to your external CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/details_screen.css') }}">
+    <!-- Link to Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Link to your external JavaScript file -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+</head>
+
+<body>
+    <!-- side bar  code start -->
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-3 sidebar">
+                <img src="{{ url_for('static', filename='assets/countai_prev_ui.png') }}" alt="Logo"
+                    class="sidebar-logo">
+                <a href="{{ url_for('home') }}">
+                    <div class="home-container">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </div>
+                </a>
+                <h4 class="mt-3 mb-3">Clients</h4>
+                <ul class="list-unstyled" id="client-list">
+                    {% for mill_data in firebase_data %}
+                    {% for key, data in mill_data.items() %}
+                    {% if data['bypass'] == 'OFF' and data['details_Screen_data']['software_status'] == 'OFF' and
+                    data['details_Screen_data']['image_status'] == 'OFF' %}
+                    <li class="sidebar-item" data-mill="{{ key }}">
+                        <i class="fas fa-industry"></i> {{ key }}
+                        <span
+                            class="status-icon {% if data.get('status') == 'offline' %}offline{% elif data.get('status') == 'online' %}online{% endif %}"></span>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+
+            <div class="col-md-12 details-container">
+                <!-- Display the mill name at the top center -->
+                <div class="mill-name">
+                    <h1 id="selected-mill">{{ mill_details.mill_key }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- side bar code end -->
+
+
+    <!-- live status detisl code start  -->
+    <div class="container" style=" margin-left: 290px;">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="live-status-heading" style="margin-left: 27px;">Live Status</h2>
+
+                <div class="status-container">
+                    <!-- Container 1 -->
+                    <div class="status-item knit">
+                        Knit <br><span class="status-text-on">{{ status }}</span>
+                    </div>
+                    <!-- Container 2 -->
+                    <div class="status-item machine">
+                        Machine <span class="status-text-off">{{ details_screen_data.get('machine_status',
+                            'N/A')
+                            }}</span>
+                    </div>
+                    <!-- Container 3 -->
+                    <div class="status-item controller">
+                        Controller <span class="status-text-on">{{ details_screen_data.get('controller_status',
+                            'N/A')
+                            }}</span>
+                    </div>
+                    <!-- Container 4 -->
+                    <div class="status-item bypass">
+                        Bypass <span class="status-text-on">{{ mill_details.get('bypass', 'N/A') }}</span>
+                    </div>
+                    <!-- Container 5 -->
+                    <div class="status-item camera">
+                        Camera <span class="status-text-on">{{ details_screen_data.get('camara_status', 'N/A')
+                            }}</span>
+                    </div>
+                    <!-- Container 6 -->
+                    <div class="status-item sensor">
+                        Software <span class="status-text-on">{{ details_screen_data.get('software_status',
+                            'N/A')
+                            }}</span>
+                    </div>
+                    <!-- Container 7 -->
+                    <div class="status-item ml">
+                        ML <br> <span class="status-text-on">{{ details_screen_data.get('ml_status', 'N/A')
+                            }}</span>
+                    </div>
+                    <!-- Container 8 -->
+                    <div class="status-item monitor">
+                        Monitor <span class="status-text-on">{{ details_screen_data.get('monitor_status', 'N/A')
+                            }}</span>
+                    </div>
+                    <!-- Container 9 -->
+                    <div class="status-item report">
+                        Report <span class="status-text-on">{{ details_screen_data.get('report_status', 'N/A')
+                            }}</span>
+                    </div>
+                    <!-- Container 10 -->
+                    <div class="status-item alarm">
+                        Alarm <span class="status-text-on">{{ details_screen_data.get('alarm_status', 'N/A')
+                            }}</span>
+                    </div>
+                    <!-- Container 11 -->
+                    <div class="status-item core">
+                        Image <span class="status-text-on">{{ details_screen_data.get('image_status', 'N/A')
+                            }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Live status details end -->
+    <br>
+    <!-- this chart container this have the three chart the chart coanter code starting  -->
+    <div class="container-fluid" id="full-width-container">
+        <div class="row">
+            <div class="col-md-5">
+                <h2 class="live-analytics-heading">Live Uptime Analytics</h2>
+                <div id="realtime-chart" data-uptime='{{ uptime | tojson | safe }}'></div>
+            </div>
+            <div class="col-md-3">
+                <h2 class="fabric-report-heading">Fabric Report</h2>
+                <div id="bar-chart"
+                    data-bar-chart-data='{{ details_screen_data["graph_dataframe_dict"] | tojson | safe }}'>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <h2 class="fabric-report-heading">Storage</h2>
+                <div id="pie-chart" class="position-relative"
+                    data-system-storege='{{ system_storage | tojson | safe }}'>
+                    <!-- Text indicating storage usage -->
+                    <div class="storage-usage position-absolute bottom-0 start-50 translate-middle-x" id="storage-info"
+                        style="font-size: 12px;">
+                        <!-- Content will be updated dynamically using JavaScript -->
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <!-- charts container coee end -->
+
+
+    <!-- Program Details Heading -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h2 class="program-details-heading">Program Details</h2>
+            </div>
+        </div>
+
+        <!-- Two Columns Container -->
+        <div class="row mt-4">
+            <!-- First Column -->
+            <div class="col-md-6">
+                <div class="program-details-column">
+                    <h3 class="column-heading">Roll No</h3>
+                    <p class="column-value">{{details_screen_data['roll_id']}}</p>
+                </div>
+            </div>
+
+            <!-- Second Column -->
+            <div class="col-md-6">
+                <div class="program-details-column">
+                    <h3 class="column-heading">Doff Count</h3>
+                    <p class="column-value">
+                        {{details_screen_data['doff_currect_roll']}}/{{details_screen_data['total_doff_count']}}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ending  -->
+    <!-- verticaly scriling end -->
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Link to ApexCharts -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+
+    <!-- Your chart scripts -->
+    <script src="{{ url_for('static', filename='js/realtime-chart.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bar-chart.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/storege_chart.js') }}"></script>
+
+    <script>
+        // Define the fetchMillData function
+        async function fetchMillData(millKey) {
+            try {
+                // Use fetch or any other method to get data from the server
+                const response = await fetch(`/api/data/${millKey}`);
+                const data = await response.json();
+
+                return data;
+            } catch (error) {
+                console.error('Error fetching mill data:', error);
+                return { uptime: {}, graphData: {}, storageData: {} };
+            }
+        }
+
+        // Function to load data for the selected mill
+        async function loadMillData(millKey) {
+            try {
+                // Fetch data for the selected mill
+                const millData = await fetchMillData(millKey);
+
+                // Update the content dynamically using the fetched data
+                document.getElementById('realtime-chart').setAttribute('data-uptime', JSON.stringify(millData.uptime));
+                document.getElementById('bar-chart').setAttribute('data-bar-chart-data', JSON.stringify(millData.graphData));
+                document.getElementById('pie-chart').setAttribute('data-system-storege', JSON.stringify(millData.storageData));
+                // ... Update other elements as needed
+            } catch (error) {
+                console.error('Error loading mill data:', error);
+            }
+        }
+
+        // Function to handle URL changes
+        function handleUrlChange(millKey) {
+            // Add focus class to the corresponding sidebar item
+            const sidebarItem = document.querySelector('#client-list li[data-mill="' + millKey + '"]');
+            if (sidebarItem) {
+                sidebarItem.classList.add('focused');
+            }
+
+            // Load data for the selected mill
+            loadMillData(millKey);
+        }
+
+        // Function to simulate a click on the next client
+        function switchToNextClient() {
+            const focusedItem = document.querySelector('#client-list li.focused');
+            if (focusedItem) {
+                const nextItem = focusedItem.nextElementSibling || document.querySelector('#client-list li:first-child');
+                if (nextItem) {
+                    focusedItem.classList.remove('focused');
+                    nextItem.classList.add('focused');
+                    const millKey = nextItem.getAttribute('data-mill');
+                    document.querySelector('.mill-name h1').innerText = nextItem.innerText;
+                    loadMillData(millKey);
+                    window.history.pushState(null, '', `{{ url_for('details', mill_key='') }}${millKey}`);
+
+                    // Reload the page after switching to the next client
+                    location.reload(true);
+                }
+            }
+        }
+
+        // Add click event listener to each list item
+        document.querySelectorAll('#client-list li').forEach(function (item) {
+            item.addEventListener('click', async function () {
+                // Remove focus class from all items
+                document.querySelectorAll('#client-list li').forEach(function (li) {
+                    li.classList.remove('focused');
+                });
+
+                // Add focus class to the clicked item
+                this.classList.add('focused');
+
+                // Update the mill name in the top center
+                document.querySelector('.mill-name h1').innerText = this.innerText;
+
+                // Extract the mill key from the clicked item
+                const millKey = this.getAttribute('data-mill');
+
+                // Call the function to load data for the selected mill
+                await loadMillData(millKey);
+
+                // Update the URL to reflect the selected mill (optional)
+                // You may need to adjust this based on your routing logic
+                window.history.pushState(null, '', `{{ url_for('details', mill_key='') }}${millKey}`);
+            });
+        });
+
+        // Add focus to the selected mill in the sidebar on page load
+        window.onload = function () {
+            const urlParts = window.location.href.split('/');
+            const millKey = urlParts[urlParts.length - 1];
+            handleUrlChange(millKey);
+        };
+
+        // Listen for popstate event (back/forward button)
+        window.addEventListener('popstate', function () {
+            const urlParts = window.location.href.split('/');
+            const millKey = urlParts[urlParts.length - 1];
+            handleUrlChange(millKey);
+        });
+
+        // Switch to the next client every 10 seconds
+        setInterval(switchToNextClient, 30000);
+    </script>
+
+</body>
+
+</html>

@@ -22,7 +22,6 @@
                 <span id="offline-label">Offline</span>
             </div>
         </div>
-
     </header>
 
     <!-- Add container with grid layout -->
@@ -30,74 +29,101 @@
         <!-- First row -->
         {% for mill_data in firebase_data %}
         {% for key, data in mill_data.items() %}
-
-
-        <div class="grid-item item1">
-            <div class="mill-header">
-                <h2 class="kpr-title">{{ key }}</h2>
-                <!-- Add the round status icon -->
-                <div class="status-icon {% if data['status'] == 'online' %}active{% else %}inactive{% endif %}"></div>
-            </div>
-
-            <div class="details">
-                <div class="detail-item-main">
-                    <span><strong>Machine Status</strong></span>
-                    <span>{{ data['machine_status'] }}</span>
-                </div>
-                <div class="detail-item-main">
-                    <span><strong>Bypass Status</strong></span>
-                    <span>{{ data['bypass'] }}</span>
-                </div>
-                <div class="detail-item-main">
-                    <span><strong>Count</strong></span>
-                    <span>{{ data['count'] }}</span>
-                </div>
-                <div class="detail-item-main">
-                    <span><strong>Denier</strong></span>
-                    <span>{{ data['denier'] }}</span>
-                </div>
-                <div class="detail-item-main">
-                    <span><strong>LL</strong></span>
-                    <span>{{ data['loop_length'] }}</span>
-                </div>
-                <div class="detail-item-main">
-                    <span><strong>Fabric material</strong></span>
-                    <span>{{ data['fabric_type'] }}</span>
-                </div>
-                <div class="detail-item-main">
-                    <span><strong>Fabric color</strong></span>
-                    <span>{{ data['fabric_color'] }}</span>
-                </div>
-            </div>
-            <div class="additional-details-container item1">
-                <div class="defect-count-heading">
-                    <h3>Defect Count</h3>
+        <a href="{{ url_for('details', mill_key=key) }}" style="text-decoration: none; color: inherit;">
+            <div class="grid-item item1">
+                <div class="mill-header">
+                    <h2 class="kpr-title">{{ key }}</h2>
+                    <!-- Add the round status icon -->
+                    <div class="status-icon {% if data['status'] == 'online' %}active{% else %}inactive{% endif %}">
+                    </div>
                 </div>
 
-                <!-- Iterate over defect details dynamically -->
-                <div class="detail-row">
-                    {% set defect_details = [] %}
-                    {% for defect, count in data.items() if defect not in ['bypass', 'count', 'denier', 'fabric_color',
-                    'fabric_type', 'loop_length', 'machine_status', 'sending_time', 'status'] and count != 0 %}
-                    {% set defect_details = defect_details + [(defect, count)] %}
-                    {% for defect, count in defect_details %}
-                    <div class="detail-item">
-                        <span>{{ defect }}</span>
-                        <span>{{ count }}</span>
+                <div class="details">
+                    <div class="detail-item-main">
+                        <span><strong>Machine Status</strong></span>
+                        <span>{{ data['machine_status'] }}</span>
+                    </div>
+                    <div class="detail-item-main">
+                        <span><strong>Bypass Status</strong></span>
+                        <span>{{ data['bypass'] }}</span>
+                    </div>
+                    <div class="detail-item-main">
+                        <span><strong>Count</strong></span>
+                        <span>{{ data['count'] }}</span>
+                    </div>
+                    <div class="detail-item-main">
+                        <span><strong>Denier</strong></span>
+                        <span>{{ data['denier'] }}</span>
+                    </div>
+                    <div class="detail-item-main">
+                        <span><strong>LL</strong></span>
+                        <span>{{ data['loop_length'] }}</span>
+                    </div>
+                    <div class="detail-item-main">
+                        <span><strong>Fabric material</strong></span>
+                        <span>{{ data['fabric_type'] }}</span>
+                    </div>
+                    <div class="detail-item-main">
+                        <span><strong>Fabric color</strong></span>
+                        <span>{{ data['fabric_color'] }}</span>
+                    </div>
+                </div>
+                <div class="additional-details-container item1">
+                    <div class="defect-count-heading">
+                        <h3>Defect Count</h3>
                     </div>
 
-                    {% endfor %}
-                    {% endfor %}
-
-
+                    <!-- Iterate over defect details dynamically -->
+                    <div class="detail-row">
+                        {% set defect_details = [] %}
+                        {% for defect, count in data.items() if defect not in ['bypass', 'count', 'denier',
+                        'fabric_color',
+                        'fabric_type', 'loop_length', 'machine_status', 'sending_time',
+                        'status','details_Screen_data','uptime','system_storage'] and count != 0 %}
+                        {% set defect_details = defect_details + [(defect, count)] %}
+                        {% for defect, count in defect_details %}
+                        <div class="detail-item">
+                            <span>{{ defect }}</span>
+                            <span>{{ count }}</span>
+                        </div>
+                        {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
-
             </div>
-
-        </div>
+        </a>
         {% endfor %}
         {% endfor %}
     </div>
+
+    <!-- Add this script at the end of your body tag in home.html -->
+    <!-- Add this script at the end of your body tag in home.html -->
+    <script>
+        // Function to fetch updated data from the server
+        function fetchData() {
+            fetch('/refresh_data')  // Use the endpoint you want to trigger the data refresh
+                .then(response => response.json())
+                .then(data => {
+                    // Update the content on the page with the new data
+                    // You might need to adjust this part based on your data structure
+                    document.getElementById('online-value').innerText = data.online_count;
+                    document.getElementById('offline-value').innerText = data.offline_count;
+    
+                    // Update other content as needed
+                })
+                .catch(error => {
+                    console.error('Error fetching data:', error);
+                });
+        }
+    
+        // Schedule data fetches every 2 minutes
+        setInterval(fetchData, 2 * 60 * 1000);
+    
+        // Fetch data immediately when the page loads
+        document.addEventListener('DOMContentLoaded', fetchData);
+    </script>
+    
+
 </body>
 
 </html>

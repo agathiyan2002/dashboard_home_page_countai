@@ -1,0 +1,393 @@
+/* details_screen.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: hidden;
+
+}
+
+
+
+.sidebar {
+    height: 150%;
+    width: 300px;
+    /* Increased width */
+    position: fixed;
+    background-color: rgb(41, 25, 25);
+    padding-top: 20px;
+}
+
+.sidebar-logo {
+    max-width: 250px;
+    margin-bottom: 20px;
+}
+
+/* details_screen.css */
+
+/* ... (your existing styles) */
+
+.sidebar li {
+    text-align: start;
+    margin-bottom: 40px;
+    margin-left: 30px;
+    color: white;
+    /* Set the default text color for sidebar items */
+    font-size: 18px;
+}
+
+/* details_screen.css */
+
+.sidebar li.focused {
+    background-color: grey;
+    /* Set the background color for focused items */
+    color: white;
+    /* Set the text color for focused items */
+    margin-left: 0;
+    padding: 10px;
+    border-radius: 10px;
+    /* Add border-radius for rounded corners */
+}
+
+
+.sidebar li i {
+    font-size: px;
+    /* Please specify the appropriate font size here */
+}
+
+/* ... (your existing styles) */
+
+
+
+
+.sidebar li.focused .home-container {
+    background-color: white;
+    /* Set the background color for the home container */
+    color: #ff94be;
+    /* Set the text color for the home container */
+    padding: 10px;
+    /* Add padding for better aesthetics */
+}
+
+.sidebar li i {
+    font-size: px;
+}
+
+.home-container {
+    background-color: white;
+    padding: 10px;
+    margin-bottom: 20px;
+    text-align: start;
+}
+
+
+
+h1 {
+    margin-top: 20px;
+    /* Adjusted margin */
+}
+
+
+
+
+
+
+.status-container {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+    width: 149%;
+    padding: 15px;
+    overflow-x: hidden;
+    /* Hide horizontal overflow */
+}
+
+.status-item {
+    width: 500px;
+    height: 100px;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    margin-right: 30px;
+}
+
+
+/* Define different styles for different status items */
+.knit {
+    background-color: #d46752;
+    color: white;
+}
+
+.machine {
+    background-color: #3498DB;
+    color: white;
+}
+
+.controller {
+    background-color: #27AE60;
+    color: white;
+}
+
+.bypass {
+    background-color: #F1C40F;
+    color: white;
+}
+
+.camera {
+    background-color: #8E44AD;
+    color: white;
+}
+
+.sensor {
+    background-color: #E67E22;
+    color: white;
+}
+
+.ml {
+    background-color: #337cc5;
+    color: white;
+}
+
+.monitor {
+    background-color: #1ABC9C;
+    color: white;
+}
+
+.report {
+    background-color: #57ccd4;
+    color: white;
+}
+
+.alarm {
+    background-color: #8aa9c9;
+    color: white;
+}
+
+.core {
+    background-color: #65814b;
+    color: white;
+}
+
+/* details_screen.css */
+
+/* Add this style to adjust the size of the icons */
+.status-item img {
+    width: 50px;
+    /* Adjust the width as needed */
+    height: auto;
+    /* Maintain aspect ratio */
+    margin-bottom: 5%;
+    /* Add some space below the icon */
+}
+
+/* details_screen.css */
+
+/* Adjust styles for the Live Uptime Analytics heading */
+.live-analytics-heading {
+    text-align: start;
+    margin-left: 20px;
+}
+
+
+#realtime-chart,
+#bar-chart {
+    width: 100%;
+    height: 300px;
+    margin-bottom: 20px;
+}
+
+.with-padding {
+    padding-top: 10px;
+    /* Adjust the padding value as needed */
+}
+
+.percentage-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-size: 24px;
+    font-family: Helvetica, Arial, sans-serif;
+    color: #333;
+    font-weight: bold;
+    /* Make the text bold */
+}
+
+.storage-usage {
+
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+    /* Adjust position as needed */
+}
+
+.position-relative {
+    position: relative;
+}
+
+.position-absolute {
+    position: absolute;
+}
+
+.bottom-0 {
+    bottom: 0;
+}
+
+.start-50 {
+    left: 50%;
+}
+
+.translate-middle-x {
+    transform: translateX(-50%);
+}
+
+.roll-no-heading,
+.doff-count-heading,
+.column-heading {
+    font-size: 24px;
+    font-weight: bolder;
+    /* Increased boldness */
+    font-style: italic;
+    /* Italic font style */
+    color: #007BFF;
+    /* Blue color for headings */
+}
+
+.roll-no-value,
+.doff-count-value,
+.column-value {
+    font-size: 20px;
+    /* Increased font size for values */
+    color: #333;
+}
+
+.text-end {
+    text-align: end;
+}
+
+.text-start {
+    text-align: start;
+}
+
+.program-details-column {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.column-heading {
+    margin-bottom: 5px;
+}
+
+.column-value {
+    margin-top: 5px;
+}
+
+#full-width-container {
+    margin-left: 300px;
+    /* Adjust the margin to match the width of the sidebar */
+    padding: 20px;
+    /* Add padding for better aesthetics */
+}
+
+@media (max-width: 768px) {
+
+    /* Adjust for smaller screens */
+    #full-width-container {
+        margin-left: 0;
+        /* Reset margin for smaller screens */
+    }
+}
+
+#pie-chart {
+    position: relative;
+    /* Add position relative to use absolute positioning inside */
+    width: 135%;
+    /* Set to 100% or a fixed width */
+    height: 190px;
+    /* Set the height to any desired value */
+    overflow: visible;
+    /* Ensure overflow is visible */
+}
+
+#pie-chart .storage-usage {
+    position: absolute;
+    /* Position the text absolutely inside the pie chart */
+    bottom: -50px;
+    /* Adjust the bottom position to move it outside the pie chart */
+    left: 50%;
+    /* Center the text horizontally */
+    transform: translateX(-50%);
+    /* Adjust for centering */
+    font-size: 18px;
+    /* Adjust font size to fit the new dimensions */
+}
+
+.details-container {
+    max-width: 800px;
+    margin: 5px auto;
+    /* Decreased margin-top to 10px */
+    text-align: center;
+}
+
+
+h1 {
+    margin-top: 20px;
+    /* Adjusted margin */
+}
+
+.detail-item {
+    margin-bottom: 15px;
+}
+
+
+
+/* Add styles for the status text */
+.status-text-on,
+.status-text-off {
+    font-size: 16px;
+    font-weight: 600;
+    /* Adjust the font weight for boldness */
+    color: #fafafa;
+    /* Set the color for ON status */
+}
+
+
+
+
+/* Add this to your CSS file or in a style tag in your HTML */
+
+/* Offline status */
+.status-icon.offline {
+    width: 13px;
+    /* Set your desired width */
+    height: 13px;
+    /* Set your desired height */
+    background-color: red;
+    /* Set your desired color for offline status */
+    border-radius: 50%;
+    /* Make it a circle */
+    display: inline-block;
+    margin-left: 10px;
+    /* Add some spacing to the right */
+}
+
+/* Online status */
+.status-icon.online {
+    width: 13px;
+    /* Set your desired width */
+    height: 13px;
+    /* Set your desired height */
+    background-color: green;
+    /* Set your desired color for online status */
+    border-radius: 50%;
+    /* Make it a circle */
+    display: inline-block;
+    margin-left: 10px;
+    /* Add some spacing to the right */
+}
